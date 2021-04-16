@@ -1,0 +1,17 @@
+lark:
+  endpoint: https://open.larksuite.com/open-apis  #Alternative with https://open.feishu.cn in China
+  app-id: cli_xxxxxx
+  app-secret: RGExxxxxxxxx
+  authorization-type: INTERNAL_APP
+  auth-patterns:
+    - "/open-apis/contact/**"
+    - "/open-apis/chat/**"
+    - "/open-apis/message/**"
+#    - "/open-apis/auth/**"
+jackson:
+  property-naming-strategy: SNAKE_CASE
+
+micronaut:
+  http:
+    client:
+      read-timeout: 512s
