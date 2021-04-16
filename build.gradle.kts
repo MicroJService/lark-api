@@ -7,7 +7,7 @@ plugins {
     id("org.jetbrains.kotlin.kapt") version "$pluginVersion"
     id("org.jetbrains.kotlin.plugin.allopen") version "$pluginVersion"
     id("groovy")
-    id("maven")
+    id("maven-publish")
 
 }
 
