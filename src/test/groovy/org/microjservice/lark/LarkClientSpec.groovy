@@ -13,7 +13,7 @@ import spock.lang.Specification
  * @since 0.1.0
  */
 @MicronautTest
-class LarkClientTest extends Specification {
+class LarkClientSpec extends Specification {
     @Value("\${lark.app-id}")
     String appId
     @Value("\${lark.app-secret}")
@@ -26,11 +26,4 @@ class LarkClientTest extends Specification {
         StringUtils.isNotBlank(appId) && StringUtils.isNotBlank(endpoint)
     }
 
-    def "jackson test"() {
-
-        def objectMapper = new ObjectMapper()
-        objectMapper.setPropertyNamingStrategy(PropertyNamingStrategy.SNAKE_CASE)
-        expect:
-        StringUtils.isNotBlank(appId) && StringUtils.isNotBlank(endpoint)
-    }
 }

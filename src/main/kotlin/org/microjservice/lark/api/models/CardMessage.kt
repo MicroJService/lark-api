@@ -1,6 +1,7 @@
 package org.microjservice.lark.api.models
 
 import com.fasterxml.jackson.annotation.JsonProperty
+import com.fasterxml.jackson.databind.PropertyNamingStrategies
 import com.fasterxml.jackson.databind.PropertyNamingStrategy
 import com.fasterxml.jackson.databind.annotation.JsonNaming
 import io.micronaut.core.annotation.Introspected
@@ -55,7 +56,7 @@ data class Card(
     }
 
     open class Module(val tag: Tag) {
-        @JsonNaming(value = PropertyNamingStrategy.LowerCaseStrategy::class)
+        @JsonNaming(value = PropertyNamingStrategies.LowerCaseStrategy::class)
         enum class Tag {
             @JsonProperty("div") DIV,
             HR, IMG, ACTION, NOTE,
@@ -87,7 +88,7 @@ data class Card(
         val lines: Int?,
         val i18n: I18N?,
     ) {
-        @JsonNaming(value = PropertyNamingStrategy.LowerCaseStrategy::class)
+        @JsonNaming(value = PropertyNamingStrategies.LowerCaseStrategy::class)
         enum class Tag {
             @JsonProperty("plain_text")
             PLAIN_TEXT,

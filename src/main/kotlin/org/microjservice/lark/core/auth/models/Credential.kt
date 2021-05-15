@@ -1,7 +1,7 @@
 package org.microjservice.lark.core.auth.models
 
 import io.micronaut.context.annotation.Value
-import javax.inject.Singleton
+import jakarta.inject.Singleton
 
 /**
  * Lark suite authentication credential to obtain access token.

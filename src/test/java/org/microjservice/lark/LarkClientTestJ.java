@@ -24,15 +24,15 @@ public class LarkClientTestJ {
 
 
     @Test
-    public void testBuilder() throws Exception {
-        LarkClient larkApi = new LarkClient.Builder()
+    public void testBuilder() {
+        LarkClient larkClient = new LarkClient.Builder()
                 .withCredential(
                         new Credential(appId, appSecret, Credential.CredentialType.INTERNAL_APP)
                 )
                 .withEndpoint(endpoint)
                 .build();
         Assertions.assertTrue(
-                larkApi.getChatApi().list().getData().getGroups().size() > 0
+                larkClient.getChatApi().list().getData().getGroups().size() > 0
         );
     }
 }

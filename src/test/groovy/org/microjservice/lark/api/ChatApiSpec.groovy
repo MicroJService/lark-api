@@ -1,12 +1,11 @@
 package org.microjservice.lark.api
 
 import io.micronaut.test.extensions.spock.annotation.MicronautTest
+import jakarta.inject.Inject
 import org.junit.platform.commons.util.StringUtils
-import org.microjservice.lark.core.auth.AuthorizationApi
-import org.spockframework.util.CollectionUtil
+
 import spock.lang.Specification
 
-import javax.inject.Inject
 
 /**
  * ${description}*
@@ -14,7 +13,7 @@ import javax.inject.Inject
  * @since ${version}
  */
 @MicronautTest
-class ChatApiTest extends Specification {
+class ChatApiSpec extends Specification {
 
     @Inject
     ChatApi chatApi

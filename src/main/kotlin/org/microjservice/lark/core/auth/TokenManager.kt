@@ -1,9 +1,8 @@
 package org.microjservice.lark.core.auth
 
+import jakarta.inject.Singleton
 import org.microjservice.lark.core.auth.models.Credential
 import org.microjservice.lark.core.auth.models.Token
-import javax.annotation.PostConstruct
-import javax.inject.Singleton
 
 /**
  * API to get access token.
@@ -20,11 +19,6 @@ class TokenManager(
 
     @Volatile
     var token: Token? =null
-
-//    @PostConstruct
-//    fun init() {
-//        refreshToken()
-//    }
 
     fun getAccessToken(): String {
         if (null == token || token!!.isExpired()) {

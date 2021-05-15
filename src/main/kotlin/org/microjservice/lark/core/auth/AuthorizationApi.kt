@@ -48,4 +48,7 @@ interface AuthorizationApi {
     @Post("/v3/tenant_access_token")
     fun tenantAccessToken(@Body credential: Credential): AuthResponse
 
+    @Post("/v3/app_ticket/resend")
+    fun resendAppTicket(@Body credential: Credential): AuthResponse
+
 }

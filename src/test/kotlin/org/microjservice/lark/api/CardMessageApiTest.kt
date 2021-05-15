@@ -1,4 +1,4 @@
-package org.microjservice.lark.org.microjservice.lark.api
+package org.microjservice.lark.api
 
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldNotBe
@@ -16,6 +16,7 @@ class CardMessageApiTest(
 
     given("CardMessageApi") {
         `when`("send CardMessage") {
+            //todo use kotlin dsl to simplify CardMessage constructing
             val cardMessage = CardMessage(
                 chatApi.list().data.groups.first().chatId,
                 "interactive",

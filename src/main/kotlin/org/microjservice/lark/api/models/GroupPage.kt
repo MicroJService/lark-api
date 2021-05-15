@@ -9,8 +9,8 @@ import io.micronaut.core.annotation.Introspected
  * @since 0.1.0
  */
 @Introspected
-data class GroupPage(
-    val hasMore: Boolean,
-    val pageToken: String,
+class GroupPage(
+    hasMore: Boolean,
+    pageToken: String,
     val groups: List<Group>,
-)
+) : Page(hasMore, pageToken)

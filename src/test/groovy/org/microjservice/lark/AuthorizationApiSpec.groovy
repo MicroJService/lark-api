@@ -16,7 +16,7 @@ import javax.inject.Inject
  * @since 0.1.0
  */
 @MicronautTest
-class AuthorizationApiTest extends Specification {
+class AuthorizationApiSpec extends Specification {
     @Inject
     AuthorizationApi authorizationApi
 

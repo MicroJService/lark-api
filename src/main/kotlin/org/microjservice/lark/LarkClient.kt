@@ -1,10 +1,16 @@
 package org.microjservice.lark
 
+//import jakarta.inject.Singleton
 import io.micronaut.context.ApplicationContext
+import io.micronaut.runtime.EmbeddedApplication
+import io.micronaut.runtime.server.EmbeddedServer
+import org.microjservice.lark.api.BotApi
 import org.microjservice.lark.api.CardMessageApi
 import org.microjservice.lark.api.ChatApi
-import org.microjservice.lark.core.auth.TokenManager
+import org.microjservice.lark.api.MessageApi
+import org.microjservice.lark.core.auth.AuthorizationApi
 import org.microjservice.lark.core.auth.models.Credential
+import org.microjservice.lark.core.event.v2.EventConsumer
 import javax.inject.Singleton
 
 /**
@@ -15,21 +21,67 @@ import javax.inject.Singleton
  */
 @Singleton
 class LarkClient(
-    val cardMessageApi: CardMessageApi,
+    val authorizationApi: AuthorizationApi,
     val chatApi: ChatApi,
+    val cardMessageApi: CardMessageApi,
+    val messageApi: MessageApi,
+    val botApi: BotApi,
 ) {
+    var context: ApplicationContext? = null
+
 
     class Builder {
-        var credential: Credential? = null
-        var endpoint: String? = null
+
+        companion object {
+            const val APP_ID_PROPERTY_NAME = "lark.app-id"
+            const val APP_SECRETE_PROPERTY_NAME = "lark.app-secret"
+            const val AUTHORIZATION_TYPE_PROPERTY_NAME = "lark.authorization-type"
+            const val ENDPOINT_PROPERTY_NAME = "lark.endpoint"
+        }
+
+        private var credential: Credential? = null
+
+        private var endpoint: String? = null
+
+        private lateinit var packages: Array<out String>
+
+        private var eventHandlers: MutableList<EventConsumer<Any>> = mutableListOf()
 
         fun withCredential(credential: Credential) = apply { this.credential = credential }
+
         fun withEndpoint(endpoint: String) = apply { this.endpoint = endpoint }
 
+        fun withEventHandler(eventHandler: EventConsumer<Any>) = apply { this.eventHandlers.add(eventHandler) }
+
+        fun packages(vararg packages: String) = apply { this.packages = packages }
+
         fun build(): LarkClient {
-            val context = ApplicationContext.run()
-            return context.getBean(LarkClient::class.java)
+            val properties = mutableMapOf<String, Any?>().apply {
+                credential?.let {
+                    put(APP_ID_PROPERTY_NAME, credential?.appId)
+                    put(APP_SECRETE_PROPERTY_NAME, credential?.appSecret)
+                    put(AUTHORIZATION_TYPE_PROPERTY_NAME, credential?.credentialType)
+                    put(ENDPOINT_PROPERTY_NAME, endpoint)
+                }
+            }
+            val context = ApplicationContext
+                .builder()
+                .properties(properties)
+                .singletons(*eventHandlers.toTypedArray())
+                .packages(*packages)
+                .start()
+
+            if (!context
+                    .getBeansOfType(EventConsumer::class.java)
+                    .isEmpty()
+            ) {
+                context.getBean(EmbeddedServer::class.java)
+                    .start()
+            }
+
+            val larkClient = context.getBean(LarkClient::class.java)
+            larkClient.context = context
+            return larkClient
         }
     }
-
 }

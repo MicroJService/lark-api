@@ -1,10 +1,10 @@
 package org.microjservice.lark.core.auth
 
 import io.micronaut.context.BeanProvider
+import jakarta.inject.Singleton
 import org.microjservice.lark.core.auth.models.Credential
 import org.microjservice.lark.core.auth.models.Credential.CredentialType
 import org.microjservice.lark.core.auth.models.Token
-import javax.inject.Singleton
 
 @Singleton
 class AuthService(private val authorizationApiProvider: BeanProvider<AuthorizationApi>) {
