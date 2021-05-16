@@ -37,6 +37,7 @@ class LarkClient(
             const val APP_SECRETE_PROPERTY_NAME = "lark.app-secret"
             const val AUTHORIZATION_TYPE_PROPERTY_NAME = "lark.authorization-type"
             const val ENDPOINT_PROPERTY_NAME = "lark.endpoint"
+            const val ENCRYPT_KEY_PROPERTY_NAME = "encrypt-key"
         }
 
         private var credential: Credential? = null
@@ -44,6 +45,8 @@ class LarkClient(
         private var endpoint: String? = null
 
         private lateinit var packages: Array<out String>
+
+        private var encryptKey: String? = null
 
         private var eventHandlers: MutableList<EventConsumer<Any>> = mutableListOf()
 
@@ -53,7 +56,10 @@ class LarkClient(
 
         fun withEventHandler(eventHandler: EventConsumer<Any>) = apply { this.eventHandlers.add(eventHandler) }
 
-        fun packages(vararg packages: String) = apply { this.packages = packages }
+        fun withPackages(vararg packages: String) = apply { this.packages = packages }
+
+        fun withEncryptKey(encryptKey: String) = apply { this.encryptKey = encryptKey }
+
 
         fun build(): LarkClient {
             val properties = mutableMapOf<String, Any?>().apply {
@@ -61,8 +67,10 @@ class LarkClient(
                     put(APP_ID_PROPERTY_NAME, credential?.appId)
                     put(APP_SECRETE_PROPERTY_NAME, credential?.appSecret)
                     put(AUTHORIZATION_TYPE_PROPERTY_NAME, credential?.credentialType)
-                    put(ENDPOINT_PROPERTY_NAME, endpoint)
                 }
+
+                endpoint?.let { put(ENDPOINT_PROPERTY_NAME, endpoint) }
+                encryptKey?.let { put(ENCRYPT_KEY_PROPERTY_NAME, encryptKey) }
             }
             val context = ApplicationContext
                 .builder()
