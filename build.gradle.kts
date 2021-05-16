@@ -17,7 +17,7 @@ plugins {
 
 }
 
-version = "0.1.0"
+version = "0.1.1"
 group = "org.microjservice.lark"
 
 val jdkVersion: String by project

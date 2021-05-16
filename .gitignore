@@ -6,3 +6,5 @@ build
 
 # Ignore IDEA config directory
 .idea
+
+/log/
