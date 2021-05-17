@@ -1,6 +1,10 @@
 package org.microjservice.lark.api.models
 
+import com.fasterxml.jackson.annotation.JsonIgnore
 import com.fasterxml.jackson.annotation.JsonProperty
+import com.fasterxml.jackson.databind.ObjectMapper
+import com.fasterxml.jackson.databind.PropertyNamingStrategies
+import com.fasterxml.jackson.module.kotlin.registerKotlinModule
 import io.micronaut.core.annotation.Introspected
 import java.net.URL
 
@@ -13,9 +17,19 @@ import java.net.URL
 @Introspected
 data class Message(
     val receiveId: String,
-    val content: String,
+    @JsonIgnore
+    val contentObject: I18nContent,
     val msgType: MessageType
 ) {
+    @JvmField
+    @JsonIgnore
+    val objectMapper: ObjectMapper = ObjectMapper()
+        .registerKotlinModule()
+        .setPropertyNamingStrategy(PropertyNamingStrategies.SNAKE_CASE)
+
+    val content: String = objectMapper.writeValueAsString(contentObject)
+
+
     enum class MessageType {
         @JsonProperty("text")
         TEXT,
@@ -58,6 +72,7 @@ data class Message(
                 enum class Tag {
                     @JsonProperty("text")
                     TEXT,
+
                     @JsonProperty("a")
                     A,
 
@@ -88,7 +103,6 @@ data class Message(
                     val width: Int,
                     val height: Int,
                 ) : Content(Tag.IMG)
-
 
             }
 
