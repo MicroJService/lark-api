@@ -44,7 +44,7 @@ class LarkClient(
 
         private var endpoint: String? = null
 
-        private lateinit var packages: Array<out String>
+        private  var packages: Array<out String> = emptyArray()
 
         private var encryptKey: String? = null
 
@@ -78,14 +78,6 @@ class LarkClient(
                 .singletons(*eventHandlers.toTypedArray())
                 .packages(*packages)
                 .start()
-
-            if (!context
-                    .getBeansOfType(EventConsumer::class.java)
-                    .isEmpty()
-            ) {
-                context.getBean(EmbeddedServer::class.java)
-                    .start()
-            }
 
             val larkClient = context.getBean(LarkClient::class.java)
             larkClient.context = context

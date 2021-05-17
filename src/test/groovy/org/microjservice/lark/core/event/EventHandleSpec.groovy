@@ -81,18 +81,16 @@ class EventHandleSpec extends Specification {
                 Message.ReceiveIdType.CHAT_ID,
                 new Message(
                         chatId,
-                        new String(jacksonObjectSerializer.serialize(
-                                new Message.I18nContent(
-                                        new Message.I18nContent.RichTextContent(
-                                                "Test for message event",
-                                                [[new Message.I18nContent.RichTextContent.Content.AtContent(openId, "Test?")]]
-                                        ),
-                                        new Message.I18nContent.RichTextContent(
-                                                "Test for message event",
-                                                [[new Message.I18nContent.RichTextContent.Content.TextContent("test en_us")]]
-                                        ),
-                                )
-                        ).orElseThrow(() -> new Exception("Error on serializing content")))
+                        new Message.I18nContent(
+                                new Message.I18nContent.RichTextContent(
+                                        "Test for message event",
+                                        [[new Message.I18nContent.RichTextContent.Content.AtContent(openId, "Test?")]]
+                                ),
+                                new Message.I18nContent.RichTextContent(
+                                        "Test for message event",
+                                        [[new Message.I18nContent.RichTextContent.Content.TextContent("test en_us")]]
+                                ),
+                        )
                         ,
                         Message.MessageType.POST
                 )
@@ -100,7 +98,7 @@ class EventHandleSpec extends Specification {
 
         then:
         conditions.eventually {
-            logger.info("Receive message {}",messageEventHandler.messageEvent)
+            logger.info("Receive message {}", messageEventHandler.messageEvent)
             null != messageEventHandler.messageEvent
         }
     }
