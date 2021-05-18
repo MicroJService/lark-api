@@ -11,6 +11,7 @@ lark:
     - "/open-apis/auth/v3/app_ticket/resend"
     - "/open-apis/im/v1/messages"
     - "/open-apis/bot/v3/info"
+    - "/open-apis/user/v1/batch_get_id"
 #    - "/open-apis/auth/**"
 jackson:
   property-naming-strategy: SNAKE_CASE
