@@ -8,6 +8,7 @@ import org.microjservice.lark.api.BotApi
 import org.microjservice.lark.api.CardMessageApi
 import org.microjservice.lark.api.ChatApi
 import org.microjservice.lark.api.MessageApi
+import org.microjservice.lark.api.v1.UserApi
 import org.microjservice.lark.core.auth.AuthorizationApi
 import org.microjservice.lark.core.auth.models.Credential
 import org.microjservice.lark.core.event.v2.EventConsumer
@@ -26,6 +27,7 @@ class LarkClient(
     val cardMessageApi: CardMessageApi,
     val messageApi: MessageApi,
     val botApi: BotApi,
+    val userApi: UserApi,
 ) {
     var context: ApplicationContext? = null
 
