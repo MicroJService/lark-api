@@ -17,7 +17,7 @@ the `Request URL` with `http://replace_with_your_host:10086/lark/event` and the 
 For gradle:
 
 ```groovy
-implementation 'org.microjservice.lark:lark-api:0.1.3'
+implementation 'org.microjservice.lark:lark-api:0.1.4'
 ```
 
 For maven:
@@ -27,7 +27,7 @@ For maven:
 <dependency>
     <groupId>org.microjservice.lark</groupId>
     <artifactId>lark-api</artifactId>
-    <version>0.1.3</version>
+    <version>0.1.4</version>
 </dependency>
 ```
 

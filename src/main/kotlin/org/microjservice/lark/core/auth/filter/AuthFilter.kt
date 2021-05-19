@@ -14,7 +14,18 @@ import org.reactivestreams.Publisher
  * @author Coder Yellow
  * @since 0.1.0
  */
-@Filter( "\${lark.auth-patterns}")
+@Filter(
+    value = [
+        "/open-apis/contact/**",
+        "/open-apis/chat/**",
+        "/open-apis/message/**",
+        "/open-apis/auth/v3/app_ticket/resend",
+        "/open-apis/im/v1/messages",
+        "/open-apis/bot/v3/info",
+        "/open-apis/user/v1/batch_get_id",
+        "/open-apis/contact/v3/**"
+    ]
+)
 class AuthFilter(
     private val tokenManager: TokenManager
 ) : HttpClientFilter {
