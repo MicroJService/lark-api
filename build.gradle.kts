@@ -17,7 +17,7 @@ plugins {
 
 }
 
-version = "0.1.3"
+version = "0.1.4"
 group = "org.microjservice.lark"
 
 val jdkVersion: String by project
@@ -55,7 +55,7 @@ dependencies {
 
     implementation(platform("org.jetbrains.kotlin:kotlin-bom"))
 
-    runtimeOnly("io.micronaut:micronaut-http-server-netty")
+    compileOnly("io.micronaut:micronaut-http-server-netty")
     implementation("io.micronaut:micronaut-http-server")
 
     implementation("io.micronaut", "micronaut-http-client")
