@@ -21,8 +21,11 @@ class UserApiSpec extends Specification {
 
     def "should return user id"() {
         given:
-        def response = userApi.batchGetId(["coderyellow@hotmail.com"], null)
+        def userIds = userApi.batchGetId(["coderyellow@hotmail.com"], null)
+                .map(UserApi::getOpenIds)
+                .blockingGet()
+
         expect:
-        !response.getData().getEmailUsers().isEmpty()
+        userIds.isPresent()
     }
 }

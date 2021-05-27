@@ -34,9 +34,9 @@
 
     <logger name="io.micronaut.http.client" level="TRACE"/>
 
-    <logger name="io.micronaut.core.reflect" level="trace" />
+<!--    <logger name="io.micronaut.core.reflect" level="trace" />-->
 
-    <logger name="io.micronaut.context.condition" level="TRACE"/>
+<!--    <logger name="io.micronaut.context.condition" level="TRACE"/>-->
 
 
     <root level="info">

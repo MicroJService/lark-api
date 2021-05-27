@@ -23,12 +23,15 @@ import org.reactivestreams.Publisher
         "/open-apis/im/v1/messages",
         "/open-apis/bot/v3/info",
         "/open-apis/user/v1/batch_get_id",
-        "/open-apis/contact/v3/**"
+//        "/open-apis/contact/v3/**",
+        "/open-apis/im/v1/chats/**",
+        "/open-apis/im/v1/images",
     ]
 )
 class AuthFilter(
     private val tokenManager: TokenManager
 ) : HttpClientFilter {
+
     override fun doFilter(request: MutableHttpRequest<*>, chain: ClientFilterChain): Publisher<out HttpResponse<*>> {
         return chain.proceed(request.bearerAuth(tokenManager.getAccessToken()))
     }

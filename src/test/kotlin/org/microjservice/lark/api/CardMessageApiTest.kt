@@ -18,7 +18,7 @@ class CardMessageApiTest(
         `when`("send CardMessage") {
             //todo use kotlin dsl to simplify CardMessage constructing
             val cardMessage = CardMessage(
-                chatApi.list().data.groups.first().chatId,
+                chatApi.list().blockingGet().data.groups.first().chatId,
                 "interactive",
                 null,
                 null,
