@@ -5,15 +5,10 @@ import io.micronaut.core.reflect.InstantiationUtils
 import io.micronaut.jackson.serialize.JacksonObjectSerializer
 import io.micronaut.test.extensions.spock.annotation.MicronautTest
 import jakarta.inject.Inject
-import jakarta.inject.Singleton
-import org.jetbrains.annotations.NotNull
 import org.microjservice.lark.LarkClient
-import org.microjservice.lark.api.models.Message
+import org.microjservice.lark.api.ChatApi
+import org.microjservice.lark.api.models.MessageRequest
 import org.microjservice.lark.core.auth.models.Credential
-
-import org.microjservice.lark.core.event.v2.EventConsumer
-import org.microjservice.lark.core.event.v2.model.EventRequest
-import org.microjservice.lark.core.event.v2.model.MessageEvent
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import spock.lang.Shared
@@ -67,7 +62,11 @@ class EventHandleSpec extends Specification {
     def 'should receive message event'() {
         given:
         PollingConditions conditions = new PollingConditions(delay: 1, timeout: 64)
-        def chatId = larkClient.getChatApi().list().getData().getGroups().find().getChatId()
+        def chatId = larkClient.getChatApi()
+                .list()
+                .map(ChatApi::getChatIds)
+                .blockingGet()
+                .find()
 
         def botInfo = larkClient.botApi.info().bot
         def openId = botInfo.openId
@@ -78,21 +77,22 @@ class EventHandleSpec extends Specification {
 
         when:
         larkClient.messageApi.send(
-                Message.ReceiveIdType.CHAT_ID,
-                new Message(
+                MessageRequest.ReceiveIdType.CHAT_ID,
+                new MessageRequest(
                         chatId,
-                        new Message.I18nContent(
-                                new Message.I18nContent.RichTextContent(
+                        new MessageRequest.I18nContent(
+                                new MessageRequest.I18nContent.RichTextContent(
                                         "Test for message event",
-                                        [[new Message.I18nContent.RichTextContent.Content.AtContent(openId, "Test?")]]
+                                        [[new MessageRequest.I18nContent.RichTextContent.Content.AtContent(openId, "Test?")]]
                                 ),
-                                new Message.I18nContent.RichTextContent(
-                                        "Test for message event",
-                                        [[new Message.I18nContent.RichTextContent.Content.TextContent("test en_us")]]
-                                ),
+//                                new Message.I18nContent.RichTextContent(
+//                                        "Test for message event",
+//                                        [[new Message.I18nContent.RichTextContent.Content.TextContent("test en_us")]]
+//                                ),
+                                null
                         )
                         ,
-                        Message.MessageType.POST
+                        MessageRequest.MessageType.POST
                 )
         )
 

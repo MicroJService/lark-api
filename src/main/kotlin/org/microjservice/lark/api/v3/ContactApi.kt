@@ -5,6 +5,7 @@ import io.micronaut.http.annotation.PathVariable
 import io.micronaut.http.annotation.QueryValue
 import io.micronaut.http.client.annotation.Client
 import org.microjservice.lark.api.models.BaseResponse
+import org.microjservice.lark.api.models.UserIdType
 import org.microjservice.lark.api.v3.models.UserResponse
 
 /**
@@ -16,15 +17,9 @@ import org.microjservice.lark.api.v3.models.UserResponse
 @Client("\${lark.endpoint}/contact/v3")
 interface ContactApi {
     @Get("/users/{userId}")
-    fun users(@PathVariable userId: String, @QueryValue("user_id_type") userIdType: UserIdType): BaseResponse<UserResponse>
+    fun user(@PathVariable userId: String, @QueryValue("user_id_type") userIdType: UserIdType): BaseResponse<UserResponse>
 
-    enum class UserIdType {
-        OPEN_ID,
-        UNION_ID,
-        USER_ID;
+    @Get("")
+    fun users(@QueryValue("user_id_type") userIdType: UserIdType): BaseResponse<UserResponse>
 
-        override fun toString(): String {
-            return super.toString().toLowerCase()
-        }
-    }
 }

@@ -14,6 +14,6 @@ data class Group (
     val chatId: String,
     val description: String,
     val name: String,
-    var ownerOpenId: String,
-    var ownerUserId: String,
+    var ownerOpenId: String?,
+    var ownerUserId: String?,
 )

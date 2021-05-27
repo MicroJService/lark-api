@@ -17,7 +17,7 @@ the `Request URL` with `http://replace_with_your_host:10086/lark/event` and the 
 For gradle:
 
 ```groovy
-implementation 'org.microjservice.lark:lark-api:0.1.4'
+implementation 'org.microjservice.lark:lark-api:0.1.5'
 ```
 
 For maven:
@@ -123,3 +123,74 @@ Maven:
 </annotationProcessorPaths>
 ```
 The event deliver is broadcast, meaning every `EventConsumer` will receive the corresponding type message. 
+
+#### Messaging sending
+Lark suite support text, image and post type message.
+```java
+RichTextContent englishContent = new RichTextContent(
+                "Title",
+                Arrays.asList(
+                        Arrays.asList(
+                                new TextContent("First line"),
+                                new LinkContent(new URL("https://github.com/MicroJService/lark-api"), "Hyperlinks"),
+                                new AtContent("ou_1avnmsbv3k45jnk34j5", "tom")
+                        ),
+                        Collections.singletonList(
+                                new ImgContent("img_v2_80f5e116-af07-42a6-8df7-d7f07b14f1fg", 300, 300)
+                        ),
+                        Arrays.asList(
+                                new TextContent("Second line:"),
+                                new TextContent("text testing")
+                        ),
+                        Collections.singletonList(
+                                new ImgContent("img_v2_80f5e116-af07-42a6-8df7-d7f07b14f1fg", 300, 300)
+                        )
+                )
+        );
+
+        MessageRequest messageRequest = new MessageRequest(
+                "oc_760ffdaf006eb1b422af7bf64f8df2ec",
+                new MessageRequest.I18nContent(
+                        null,englishContent
+                ),
+                MessageRequest.MessageType.POST
+        );
+
+        larkClient.getMessageApi().send(MessageRequest.ReceiveIdType.CHAT_ID, messageRequest);
+
+```
+For kotlin, we strongly recommend the [Kotlin DSL Builders](https://kotlinlang.org/docs/type-safe-builders.html) way to avoid the nested constructor hell in java, which is more like the html style:
+```kotlin
+ val message = message(language = Locale.US) {
+        title { +"Title" }
+        content {
+            line {
+                text { +"First line" }
+                a(href = "https://github.com/MicroJService/lark-api") { +"Hyperlinks" }
+                at(userid = "ou_1avnmsbv3k45jnk34j5") { +"tom" }
+            }
+
+            line {
+                img(imagekey = "img_v2_80f5e116-af07-42a6-8df7-d7f07b14f1fg", width = 300, height = 300)
+            }
+
+            line {
+                text { +"Second line:" }
+                text { +"text testing" }
+            }
+
+            line {
+                img(imagekey = "img_v2_80f5e116-af07-42a6-8df7-d7f07b14f1fg", width = 300, height = 300)
+            }
+        }
+    }
+
+larkClient.messageApi.send(
+    ReceiveIdType.CHAT_ID,
+    MessageRequest(
+        "oc_760ffdaf006eb1b422af7bf64f8df2ec",
+        I18nContent( null,message.toRichTextContent()),
+        MessageType.POST
+    )
+)
+```

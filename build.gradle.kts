@@ -17,7 +17,7 @@ plugins {
 
 }
 
-version = "0.1.4"
+version = "0.1.5"
 group = "org.microjservice.lark"
 
 val jdkVersion: String by project
@@ -60,6 +60,9 @@ dependencies {
 
     implementation("io.micronaut", "micronaut-http-client")
     implementation("jakarta.inject", "jakarta.inject-api", jakartaAnnotationVersion)
+
+    implementation("com.github.javafaker:javafaker:1.0.2")
+
 
     runtimeOnly("ch.qos.logback:logback-classic")
     runtimeOnly("com.fasterxml.jackson.module:jackson-module-kotlin")

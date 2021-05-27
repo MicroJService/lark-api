@@ -5,5 +5,5 @@ import io.micronaut.core.annotation.Introspected
 @Introspected
 open class Page(
     val hasMore: Boolean,
-    val pageToken: String,
+    val pageToken: String?,
 )

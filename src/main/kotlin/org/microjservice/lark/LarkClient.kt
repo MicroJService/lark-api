@@ -8,6 +8,7 @@ import org.microjservice.lark.api.BotApi
 import org.microjservice.lark.api.CardMessageApi
 import org.microjservice.lark.api.ChatApi
 import org.microjservice.lark.api.MessageApi
+import org.microjservice.lark.api.im.v1.ImageUploadApi
 import org.microjservice.lark.api.v1.UserApi
 import org.microjservice.lark.api.v3.ContactApi
 import org.microjservice.lark.core.auth.AuthorizationApi
@@ -25,6 +26,8 @@ import javax.inject.Singleton
 class LarkClient(
     val authorizationApi: AuthorizationApi,
     val chatApi: ChatApi,
+    val imChatApi: org.microjservice.lark.api.im.v1.ChatApi,
+    val imageUploadApi: ImageUploadApi,
     val cardMessageApi: CardMessageApi,
     val messageApi: MessageApi,
     val botApi: BotApi,
